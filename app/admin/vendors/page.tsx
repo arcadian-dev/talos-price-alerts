@@ -103,7 +103,7 @@ export default function VendorsPage() {
   const handleEdit = (vendor: IVendorProduct) => {
     setEditingVendor(vendor);
     setFormData({
-      productId: vendor.productId._id || vendor.productId,
+      productId: vendor.productId._id?.toString() || vendor.productId.toString(),
       vendorName: vendor.vendorName,
       url: vendor.url,
       scrapingSelector: vendor.scrapingSelector || '',
@@ -302,7 +302,7 @@ export default function VendorsPage() {
                       ✏️
                     </button>
                     <button
-                      onClick={() => handleDelete(vendor._id)}
+                      onClick={() => handleDelete(vendor._id.toString())}
                       className="text-red-400 hover:text-red-300 transition-colors p-2"
                     >
                       🗑️

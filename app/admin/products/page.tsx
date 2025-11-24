@@ -218,7 +218,7 @@ export default function ProductsPage() {
                       ✏️
                     </button>
                     <button
-                      onClick={() => handleDelete(product._id)}
+                      onClick={() => handleDelete(product._id.toString())}
                       className="text-red-400 hover:text-red-300 transition-colors"
                     >
                       🗑️
