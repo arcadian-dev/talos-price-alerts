@@ -205,7 +205,7 @@ export default function VendorsPage() {
               >
                 <option value="">All Products</option>
                 {products.map((product) => (
-                  <option key={product._id} value={product._id}>
+                  <option key={product._id.toString()} value={product._id.toString()}>
                     {product.name}
                   </option>
                 ))}
@@ -217,7 +217,7 @@ export default function VendorsPage() {
         {/* Vendors List */}
         <div className="space-y-4">
           {vendors.map((vendor) => (
-            <Card key={vendor._id}>
+            <Card key={vendor._id.toString()}>
               <CardContent className="p-6">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
