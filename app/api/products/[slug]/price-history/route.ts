@@ -44,7 +44,7 @@ export async function GET(
     } else {
       // Get all vendor products for this product
       const vendorProducts = await VendorProduct.find({ 
-        productId: product._id 
+        productId: (product as any)._id 
       }).select('_id').lean();
       
       matchStage.vendorProductId = { 
@@ -125,10 +125,10 @@ export async function GET(
 
     return NextResponse.json({
       product: {
-        id: product._id,
-        name: product.name,
-        slug: product.slug,
-        unit: product.unit,
+        id: (product as any)._id,
+        name: (product as any).name,
+        slug: (product as any).slug,
+        unit: (product as any).unit,
       },
       timeframe,
       data: filledHistory,

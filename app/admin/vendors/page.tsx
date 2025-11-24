@@ -7,6 +7,7 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Modal from '@/components/ui/Modal';
 import { IVendorProduct, IProduct } from '@/models';
+import { objectIdToString } from '@/utils/admin';
 
 interface VendorFormData {
   productId: string;
@@ -162,10 +163,7 @@ export default function VendorsPage() {
   };
 
   const getProductName = (vendor: IVendorProduct) => {
-    if (typeof vendor.productId === 'object' && vendor.productId.name) {
-      return vendor.productId.name;
-    }
-    return 'Unknown Product';
+    return (vendor.productId as any)?.name || 'Unknown Product';
   };
 
   if (loading) {
@@ -353,7 +351,7 @@ export default function VendorsPage() {
               >
                 <option value="">Select Product</option>
                 {products.map((product) => (
-                  <option key={product._id} value={product._id}>
+                  <option key={objectIdToString(product._id)} value={objectIdToString(product._id)}>
                     {product.name} ({product.category})
                   </option>
                 ))}

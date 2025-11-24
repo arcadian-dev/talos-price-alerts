@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     let bpcPrices = [];
     
     if (bpcProduct) {
-      bpcVendors = await VendorProduct.find({ productId: bpcProduct._id }).lean();
+      bpcVendors = await VendorProduct.find({ productId: (bpcProduct as any)._id }).lean();
       if (bpcVendors.length > 0) {
         bpcPrices = await PriceData.find({ 
           vendorProductId: { $in: bpcVendors.map(v => v._id) }
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       },
       bpcAnalysis: {
         productFound: !!bpcProduct,
-        productId: bpcProduct?._id,
+        productId: (bpcProduct as any)?._id,
         vendorCount: bpcVendors.length,
         priceDataCount: bpcPrices.length,
       },

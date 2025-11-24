@@ -34,12 +34,12 @@ export async function GET(
       isActive: true 
     }).lean();
 
-    console.log(`API: MongoDB query result:`, product ? `Found: ${product.name}` : 'Not found');
+    console.log(`API: MongoDB query result:`, product ? `Found: ${(product as any).name}` : 'Not found');
     
     if (!product) {
       // Also try without isActive filter for debugging
       const anyProduct = await Product.findOne({ slug: slug }).lean();
-      console.log(`API: Product without isActive filter:`, anyProduct ? `Found: ${anyProduct.name}` : 'Still not found');
+      console.log(`API: Product without isActive filter:`, anyProduct ? `Found: ${(anyProduct as any).name}` : 'Still not found');
       
       return NextResponse.json({ 
         error: 'Product not found',
@@ -52,7 +52,7 @@ export async function GET(
 
     // Get all vendor products for this product
     const vendorProducts = await VendorProduct.find({ 
-      productId: product._id,
+      productId: (product as any)._id,
       isActive: true 
     }).lean();
 
@@ -93,13 +93,13 @@ export async function GET(
           vendorId: vendorProduct._id,
           vendorName: vendorProduct.vendorName,
           url: vendorProduct.url,
-          price: latestPrice?.price || null,
-          amount: latestPrice?.amount || null,
-          unit: latestPrice?.unit || product.unit,
-          pricePerUnit: latestPrice?.pricePerUnit || null,
-          confidence: latestPrice?.confidence || null,
-          lastUpdated: latestPrice?.scrapedAt || null,
-          isAvailable: latestPrice?.isAvailable ?? null,
+          price: (latestPrice as any)?.price || null,
+          amount: (latestPrice as any)?.amount || null,
+          unit: (latestPrice as any)?.unit || (product as any).unit,
+          pricePerUnit: (latestPrice as any)?.pricePerUnit || null,
+          confidence: (latestPrice as any)?.confidence || null,
+          lastUpdated: (latestPrice as any)?.scrapedAt || null,
+          isAvailable: (latestPrice as any)?.isAvailable ?? null,
           trend,
           dataPoints: priceHistory.length,
           lastSuccessfulScrape: vendorProduct.lastSuccessfulScrapeAt,
@@ -133,14 +133,14 @@ export async function GET(
 
     return NextResponse.json({
       product: {
-        id: product._id,
-        name: product.name,
-        slug: product.slug,
-        category: product.category,
-        description: product.description,
-        unit: product.unit,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt,
+        id: (product as any)._id,
+        name: (product as any).name,
+        slug: (product as any).slug,
+        category: (product as any).category,
+        description: (product as any).description,
+        unit: (product as any).unit,
+        createdAt: (product as any).createdAt,
+        updatedAt: (product as any).updatedAt,
       },
       vendors: rankedVendors,
       stats,

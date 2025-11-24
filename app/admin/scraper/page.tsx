@@ -311,7 +311,7 @@ export default function ScraperPage() {
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {vendors.filter(v => v.isActive).map((vendor) => (
                   <div
-                    key={vendor._id}
+                    key={objectIdToString(vendor._id)}
                     className="flex items-center justify-between p-3 bg-[var(--bg-tertiary)] rounded-lg"
                   >
                     <div className="flex-1 min-w-0">
@@ -322,7 +322,7 @@ export default function ScraperPage() {
                         </span>
                       </div>
                       <div className="text-sm text-[var(--text-secondary)] truncate">
-                        {typeof vendor.productId === 'object' ? vendor.productId.name : 'Unknown Product'}
+                        {(vendor.productId as any)?.name || 'Unknown Product'}
                       </div>
                       <div className="text-xs text-[var(--text-muted)]">
                         Failures: {vendor.scrapeFailureCount} | 
@@ -335,10 +335,10 @@ export default function ScraperPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => testVendor(vendor._id)}
-                      disabled={testingVendor === vendor._id}
+                      onClick={() => testVendor(objectIdToString(vendor._id))}
+                      disabled={testingVendor === objectIdToString(vendor._id)}
                     >
-                      {testingVendor === vendor._id ? '...' : 'Test'}
+                      {testingVendor === objectIdToString(vendor._id) ? '...' : 'Test'}
                     </Button>
                   </div>
                 ))}

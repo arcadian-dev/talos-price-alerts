@@ -61,7 +61,7 @@ export class AlertService {
           console.error(`Error checking alerts for subscription ${subscription._id}:`, error);
           report.errors++;
           report.checks.push({
-            subscriptionId: subscription._id.toString(),
+            subscriptionId: (subscription as any)._id.toString(),
             email: subscription.email,
             productName: subscription.productId?.name || 'Unknown',
             alertType: subscription.alertType,
@@ -165,15 +165,15 @@ export class AlertService {
         if (!previousPrice) continue;
 
         // Check for price drop
-        const priceDrop = previousPrice.pricePerUnit - latestPrice.pricePerUnit;
-        const percentDrop = (priceDrop / previousPrice.pricePerUnit) * 100;
+        const priceDrop = (previousPrice as any).pricePerUnit - (latestPrice as any).pricePerUnit;
+        const percentDrop = (priceDrop / (previousPrice as any).pricePerUnit) * 100;
 
         // Trigger alert if:
         // 1. Price dropped by more than 5% OR
         // 2. Price dropped below user's threshold (if set)
         const significantDrop = percentDrop > 5;
         const belowThreshold = subscription.alertThreshold && 
-          latestPrice.pricePerUnit <= subscription.alertThreshold;
+          (latestPrice as any).pricePerUnit <= subscription.alertThreshold;
 
         if (significantDrop || belowThreshold) {
           // Send price drop alert
@@ -181,11 +181,11 @@ export class AlertService {
             productName: subscription.productId.name,
             productSlug: subscription.productId.slug,
             vendorName: vendorProduct.vendorName,
-            oldPrice: previousPrice.pricePerUnit,
-            newPrice: latestPrice.pricePerUnit,
-            amount: latestPrice.amount,
-            unit: latestPrice.unit,
-            pricePerUnit: latestPrice.pricePerUnit,
+            oldPrice: (previousPrice as any).pricePerUnit,
+            newPrice: (latestPrice as any).pricePerUnit,
+            amount: (latestPrice as any).amount,
+            unit: (latestPrice as any).unit,
+            pricePerUnit: (latestPrice as any).pricePerUnit,
             savings: priceDrop,
             url: vendorProduct.url,
           };

@@ -200,7 +200,7 @@ export class ScraperService {
     try {
       // Get product info for context
       const productName = typeof vendorProduct.productId === 'object' 
-        ? vendorProduct.productId.name 
+        ? (vendorProduct.productId as any).name 
         : 'unknown product';
 
       console.log(`Calling Grok API for product: ${productName}`);

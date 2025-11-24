@@ -86,7 +86,7 @@ export async function PUT(
         );
       }
 
-      updateData.slug = slug;
+      (updateData as any).slug = slug;
     }
 
     const product = await Product.findByIdAndUpdate(
