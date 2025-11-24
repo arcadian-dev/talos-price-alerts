@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import { Product } from '@/models';
 import { z } from 'zod';
+import { toAdminProduct } from '@/types/admin';
 
 // Validation schema for product creation/update
 const productSchema = z.object({
@@ -50,7 +51,7 @@ export async function GET(request: NextRequest) {
     ]);
 
     return NextResponse.json({
-      products,
+      products: products.map(toAdminProduct),
       pagination: {
         page,
         limit,

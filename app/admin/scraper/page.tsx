@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import { objectIdToString } from '@/utils/admin';
 import { IProduct, IVendorProduct } from '@/models';
 
 interface ScrapingResult {
@@ -225,7 +226,7 @@ export default function ScraperPage() {
                 >
                   <option value="">All Products</option>
                   {products.map((product) => (
-                    <option key={product._id} value={product._id}>
+                    <option key={objectIdToString(product._id)} value={objectIdToString(product._id)}>
                       {product.name}
                     </option>
                   ))}
